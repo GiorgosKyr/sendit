@@ -47,6 +47,8 @@ class LedgerEntry(Base):
     )
     amount_minor: Mapped[int] = mapped_column(Integer, nullable=False)
     balance_after_minor: Mapped[int] = mapped_column(Integer, nullable=False)
-    transfer_id: Mapped[str | None] = mapped_column(String(36), nullable=True, index=True)
+    transfer_id: Mapped[str | None] = mapped_column(
+        ForeignKey("transfers.id"), nullable=True, index=True
+    )
     description: Mapped[str | None] = mapped_column(String(200), nullable=True)
     created_at: Mapped[datetime] = mapped_column(UtcDateTime, default=utcnow, nullable=False)
