@@ -1,0 +1,16 @@
+services:
+  api:
+    build: .
+    image: sendit:local
+    ports:
+      - "8000:8000"
+    environment:
+      SENDIT_LOG_LEVEL: INFO
+      SENDIT_APP_ENV: docker
+      SENDIT_DATABASE_URL: sqlite:////data/sendit.db
+    volumes:
+      # Named volume so the SQLite database survives container restarts.
+      - sendit-data:/data
+
+volumes:
+  sendit-data:
