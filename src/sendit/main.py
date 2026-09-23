@@ -12,6 +12,7 @@ from sendit.core.errors import register_exception_handlers
 from sendit.core.logging import configure_logging
 from sendit.db.base import Base
 from sendit.db.session import build_engine, build_session_factory
+from sendit.transfers.router import router as transfers_router
 
 log = structlog.get_logger()
 
@@ -46,6 +47,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     register_exception_handlers(app)
     app.include_router(health_router)
     app.include_router(accounts_router)
+    app.include_router(transfers_router)
     return app
 
 
