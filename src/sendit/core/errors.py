@@ -12,8 +12,22 @@ import structlog
 from fastapi import FastAPI, Request, status
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
+from pydantic import BaseModel
 
 log = structlog.get_logger()
+
+
+class ErrorBody(BaseModel):
+    code: str
+    message: str
+    details: Any = None
+
+
+class ErrorResponse(BaseModel):
+    """Documented in OpenAPI so clients see the exact error shape for every endpoint."""
+
+    error: ErrorBody
+    correlation_id: str | None
 
 
 class DomainError(Exception):

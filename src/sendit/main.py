@@ -4,6 +4,7 @@ from contextlib import asynccontextmanager
 import structlog
 from fastapi import FastAPI
 
+from sendit.accounts.router import router as accounts_router
 from sendit.api.health import router as health_router
 from sendit.core.config import Settings, get_settings
 from sendit.core.correlation import CorrelationIdMiddleware
@@ -44,6 +45,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     app.add_middleware(CorrelationIdMiddleware)
     register_exception_handlers(app)
     app.include_router(health_router)
+    app.include_router(accounts_router)
     return app
 
 
